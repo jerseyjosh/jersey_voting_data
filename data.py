@@ -13,6 +13,7 @@ def data_pipeline(start, end):
     start, end = pd.to_datetime([start, end])
     years = range(start.year, end.year+1)
     df = get_voting_data(years)
+    df = realign_columns(df)
     df = set_dtypes(df)
     df = trim_dates(df, start=start, end=end)
     df = fix_strings(df)
@@ -54,6 +55,7 @@ def fix_strings(df):
         df[col] = df[col].str.replace(r'\s+', ' ', regex=True)
         df[col] = df[col].str.replace('é', 'e')
     return df
+
 
 def trim_dates(df, start, end):
     start = pd.to_datetime(start)
