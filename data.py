@@ -49,7 +49,10 @@ def set_dtypes(df):
 def fix_strings(df):
     object_cols = df.select_dtypes(include='object').columns
     for col in object_cols:
-        df[col] = df[col].str.lower().str.strip().str.replace(r'\s+', ' ', regex=True)
+        df[col] = df[col].str.lower()
+        df[col] = df[col].str.strip()
+        df[col] = df[col].str.replace(r'\s+', ' ', regex=True)
+        df[col] = df[col].str.replace('é', 'e')
     return df
 
 def trim_dates(df, start, end):
